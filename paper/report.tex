@@ -175,15 +175,19 @@ Table~\ref{tab:models} summarizes the performance of all three classifiers.
   \centering
   \caption{Supervised Model Performance Comparison}
   \label{tab:models}
-  \begin{tabular}{lcccc}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{llccc}
     \toprule
-    \textbf{Model} & \textbf{Dataset} & \textbf{Acc.} & \textbf{AUC} & \textbf{CV Acc.} \\
+    \textbf{Model} & \textbf{Dataset} & \textbf{Acc. (\%)} & \textbf{AUC} & \textbf{CV Acc. (\%)} \\
     \midrule
-    Random Forest  & Math (binary)      & 86.08\% & 0.9419 & 90.63 $\pm$ 2.35\% \\
-    Random Forest  & Portuguese (binary) & 87.69\% & 0.9373 & 92.45 $\pm$ 0.90\% \\
-    Gradient Boost & xAPI (3-class)     & 76.04\% & 0.9175 & 74.89 $\pm$ 6.50\% \\
+    RF & Math       & 86.08 & 0.9419 & 90.63 $\pm$ 2.35 \\
+    RF & Portuguese & 87.69 & 0.9373 & 92.45 $\pm$ 0.90 \\
+    GB & xAPI       & 76.04 & 0.9175 & 74.89 $\pm$ 6.50 \\
     \bottomrule
   \end{tabular}
+
+  \vspace{2pt}
+  {\footnotesize RF = Random Forest (binary pass/fail); GB = Gradient Boosting (3-class). CV = 5-fold cross-validation, mean $\pm$ std.}
 \end{table}
 
 The Random Forest classifiers perform well on both binary tasks. The confusion matrix in Fig.~\ref{fig:rf_results} shows relatively few false negatives — a desirable property for an early-warning system, since it is preferable to flag a student who turns out to be fine than to miss one who is genuinely at risk. The higher variance in xAPI cross-validation (±6.50\%) compared to UCI (±0.90–2.35\%) reflects both the smaller sample size and the three-class task difficulty.
