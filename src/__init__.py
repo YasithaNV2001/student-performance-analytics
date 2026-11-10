@@ -10,4 +10,6 @@ One module per part of the analysis:
     rules        Apriori association rules                  (8)
     stats_tests  statistical tests                          (9)
     plots        the 16 figures
+
+    early_warning  the model behind the Streamlit demo (app.py)
 """
