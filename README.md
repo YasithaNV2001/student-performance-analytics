@@ -32,6 +32,20 @@ Results were checked with a held-out test set **and** 5-fold cross-validation (9
 |---|---|
 | ![SHAP single student](figures/fig16_shap_single_student.png) | ![SHAP summary](figures/fig15_shap_summary.png) |
 
+## Live demo
+
+**Try it online:** _link coming soon_ <!-- add the Streamlit Community Cloud link here -->
+
+Enter a student's first-term grade, past failures, absences, weekly study time, plans for higher education and a few other factors. The app shows the risk of failing Math and a SHAP chart that explains why. It is a tool to offer support early, not to label students.
+
+Run it on your own computer:
+
+```bash
+streamlit run app.py
+```
+
+The model is a Random Forest trained on the Math data with the first-term grade but without the second-term and final grades (5-fold CV AUC 0.91). Retrain it with `python train_early_warning.py`.
+
 ## The data
 
 | Dataset | Students | What we predict |
@@ -42,19 +56,21 @@ Results were checked with a held-out test set **and** 5-fold cross-validation (9
 
 ## What I did
 
-| Step | Methods |
-|---|---|
-| Clean the data | Checked missing values, duplicates and out-of-range values; encoded labels; added features such as grade trend and study-to-absence ratio |
-| Explore | Grade distributions, correlation heatmaps, cross-subject comparison |
-| Predict | Random Forest and Gradient Boosting, compared with simple baselines and Logistic Regression |
-| Explain | SHAP values for overall drivers and for single students |
-| Group | K-Means clustering, shown with PCA |
-| Find patterns | Association rules (Apriori: support, confidence, lift) |
-| Test | Paired t-test and correlation between subjects |
+| Step | Methods | Code |
+|---|---|---|
+| Clean the data | Checked missing values, duplicates and out-of-range values; encoded labels; added features such as grade trend and study-to-absence ratio | [`src/data.py`](src/data.py), [`src/features.py`](src/features.py) |
+| Explore | Grade distributions, correlation heatmaps, cross-subject comparison | [`src/plots.py`](src/plots.py) |
+| Predict | Random Forest and Gradient Boosting, compared with simple baselines and Logistic Regression | [`src/models.py`](src/models.py) |
+| Explain | SHAP values for overall drivers and for single students | [`src/explain.py`](src/explain.py) |
+| Group | K-Means clustering, shown with PCA | [`src/clustering.py`](src/clustering.py) |
+| Find patterns | Association rules (Apriori: support, confidence, lift) | [`src/rules.py`](src/rules.py) |
+| Test | Paired t-test and correlation between subjects | [`src/stats_tests.py`](src/stats_tests.py) |
+
+The notebook follows the same steps in order and calls these modules, so each section shows its results next to the explanation.
 
 ## Skills shown
 
-Python · pandas · NumPy · scikit-learn · SHAP · mlxtend · SciPy · Matplotlib · seaborn · Jupyter · data cleaning · classification · clustering · association rules · hypothesis testing · model explainability
+Python · pandas · NumPy · scikit-learn · SHAP · mlxtend · SciPy · Matplotlib · seaborn · Jupyter · Streamlit · pytest · data cleaning · classification · clustering · association rules · hypothesis testing · model explainability
 
 ## Run it yourself
 
@@ -64,21 +80,38 @@ cd student-performance-analytics
 python -m venv venv
 venv\Scripts\activate        # macOS/Linux: source venv/bin/activate
 pip install -r requirements.txt
-jupyter notebook analysis.ipynb
 ```
 
-The notebook creates all 16 figures in `figures/`. Every model uses `random_state=42`, so the results are reproducible. Last run with Python 3.11 and scikit-learn 1.8; two AUC values differ from the report by less than 0.003, most likely because of newer library versions.
+Then pick what you need:
+
+```bash
+jupyter notebook analysis.ipynb   # the full analysis, step by step
+python train.py                   # or run it all at once: figures and reports/metrics.json
+pytest                            # check that the results still match
+streamlit run app.py              # the early-warning demo
+```
+
+The notebook and `train.py` both create all 16 figures in `figures/`. Every model uses `random_state=42`, so the results are reproducible.
+
+**Tested with Python 3.12.** The library versions in `requirements.txt` are pinned because newer releases change the results slightly (scikit-learn 1.9, for example, moves Math accuracy from 86.1% to 87.3%). Two AUC values differ from the report by less than 0.003, most likely because the report was made with older library versions.
 
 ## What's in this repo
 
 ```
-├── analysis.ipynb        # the full analysis, with outputs
-├── report.pdf            # IEEE-format report (revised September 2026)
-├── paper/                # LaTeX source, report figures, original April 2026 version
-├── data/raw/             # original datasets
-├── data/processed/       # cleaned datasets (made by the notebook)
-├── figures/              # all 16 figures (made by the notebook)
-└── requirements.txt
+├── analysis.ipynb          # the full analysis, with outputs
+├── src/                    # the analysis code, one module per step (see "What I did")
+├── train.py                # runs the whole analysis from the command line
+├── tests/                  # pytest tests: cleaning, features, and the results
+├── app.py                  # Streamlit early-warning demo
+├── train_early_warning.py  # trains the demo's model
+├── models/                 # the demo's trained model
+├── reports/metrics.json    # key results, written by train.py
+├── report.pdf              # IEEE-format report (revised September 2026)
+├── paper/                  # LaTeX source, report figures, original April 2026 version
+├── data/raw/               # original datasets
+├── data/processed/         # cleaned datasets (made by the notebook or train.py)
+├── figures/                # all 16 figures (made by the notebook or train.py)
+└── requirements.txt        # exact library versions
 ```
 
 The report was revised in September 2026 to correct errors in the first submission; the changes are listed in its appendix, and the original is kept in `paper/`.

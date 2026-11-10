@@ -1,0 +1,211 @@
+{
+  "environment": {
+    "python": "3.12.10",
+    "scikit-learn": "1.8.0",
+    "random_state": 42
+  },
+  "data": {
+    "math_students": 395,
+    "portuguese_students": 649,
+    "dual_enrolled_students": 382,
+    "xapi_students": 478
+  },
+  "models": {
+    "math_random_forest": {
+      "accuracy": 0.8608,
+      "auc": 0.9419,
+      "cv_mean": 0.9089,
+      "cv_std": 0.0245
+    },
+    "portuguese_random_forest": {
+      "accuracy": 0.8769,
+      "auc": 0.9364,
+      "cv_mean": 0.9245,
+      "cv_std": 0.009
+    },
+    "xapi_gradient_boosting": {
+      "accuracy": 0.7604,
+      "auc": 0.9202,
+      "cv_mean": 0.7385,
+      "cv_std": 0.0629
+    }
+  },
+  "baselines": {
+    "math": {
+      "Majority class": {
+        "accuracy": 0.6709,
+        "auc": 0.5,
+        "fail_recall": 0.0,
+        "cv_mean": 0.6709,
+        "cv_std": 0.0
+      },
+      "Rule: G2 >= 10": {
+        "accuracy": 0.8734,
+        "auc": 0.9579,
+        "fail_recall": 0.9615,
+        "cv_mean": 0.919,
+        "cv_std": 0.0206
+      },
+      "Logistic Regression": {
+        "accuracy": 0.8608,
+        "auc": 0.9448,
+        "fail_recall": 0.9231,
+        "cv_mean": 0.9114,
+        "cv_std": 0.0226
+      },
+      "Random Forest": {
+        "accuracy": 0.8608,
+        "auc": 0.9419,
+        "fail_recall": 0.9231,
+        "cv_mean": 0.9089,
+        "cv_std": 0.0245
+      }
+    },
+    "portuguese": {
+      "Majority class": {
+        "accuracy": 0.8462,
+        "auc": 0.5,
+        "fail_recall": 0.0,
+        "cv_mean": 0.8459,
+        "cv_std": 0.0005
+      },
+      "Rule: G2 >= 10": {
+        "accuracy": 0.9077,
+        "auc": 0.9761,
+        "fail_recall": 0.95,
+        "cv_mean": 0.8968,
+        "cv_std": 0.0135
+      },
+      "Logistic Regression": {
+        "accuracy": 0.8692,
+        "auc": 0.9382,
+        "fail_recall": 0.75,
+        "cv_mean": 0.8968,
+        "cv_std": 0.0077
+      },
+      "Random Forest": {
+        "accuracy": 0.8769,
+        "auc": 0.9364,
+        "fail_recall": 0.75,
+        "cv_mean": 0.9245,
+        "cv_std": 0.009
+      }
+    }
+  },
+  "early_warning": {
+    "math": {
+      "Majority class": {
+        "accuracy": 0.6709,
+        "auc": 0.5,
+        "fail_recall": 0.0,
+        "cv_mean": 0.6709,
+        "cv_std": 0.0
+      },
+      "Logistic Regression": {
+        "accuracy": 0.7089,
+        "auc": 0.6045,
+        "fail_recall": 0.5,
+        "cv_mean": 0.6785,
+        "cv_std": 0.0569
+      },
+      "Random Forest": {
+        "accuracy": 0.6835,
+        "auc": 0.627,
+        "fail_recall": 0.3846,
+        "cv_mean": 0.7266,
+        "cv_std": 0.0261
+      },
+      "Random Forest (G1 only)": {
+        "accuracy": 0.7975,
+        "auc": 0.8687,
+        "fail_recall": 0.8077,
+        "cv_mean": 0.8354,
+        "cv_std": 0.0179
+      }
+    },
+    "portuguese": {
+      "Majority class": {
+        "accuracy": 0.8462,
+        "auc": 0.5,
+        "fail_recall": 0.0,
+        "cv_mean": 0.8459,
+        "cv_std": 0.0005
+      },
+      "Logistic Regression": {
+        "accuracy": 0.7,
+        "auc": 0.6764,
+        "fail_recall": 0.55,
+        "cv_mean": 0.7627,
+        "cv_std": 0.0219
+      },
+      "Random Forest": {
+        "accuracy": 0.7846,
+        "auc": 0.6618,
+        "fail_recall": 0.3,
+        "cv_mean": 0.8552,
+        "cv_std": 0.0212
+      },
+      "Random Forest (G1 only)": {
+        "accuracy": 0.8538,
+        "auc": 0.8314,
+        "fail_recall": 0.65,
+        "cv_mean": 0.906,
+        "cv_std": 0.0191
+      }
+    }
+  },
+  "shap_top_drivers_portuguese": {
+    "failures": 0.0975,
+    "school_enc": 0.0957,
+    "higher_enc": 0.0489,
+    "parent_edu_avg": 0.0366,
+    "avg_alcohol": 0.0271,
+    "study_absence_ratio": 0.0233,
+    "guardian_enc": 0.0191,
+    "address_enc": 0.0176
+  },
+  "clustering": {
+    "uci": {
+      "silhouette": 0.1898,
+      "davies_bouldin": 1.6861
+    },
+    "xapi": {
+      "silhouette": 0.3598,
+      "davies_bouldin": 1.0937
+    }
+  },
+  "association_rules": {
+    "xapi": {
+      "outcome_rules": 11,
+      "best_rule": "absent_high -> class_low",
+      "best_lift": 2.3065,
+      "best_confidence": 0.6032
+    },
+    "uci": {
+      "outcome_rules": 25,
+      "best_rule": "alcohol_high + failures_any -> fail",
+      "best_lift": 2.06,
+      "best_confidence": 0.678
+    }
+  },
+  "statistics": {
+    "paired_ttest_math_vs_portuguese": {
+      "t": -9.9771,
+      "p": 5.561e-21,
+      "mean_math": 10.3874,
+      "mean_portuguese": 12.5157
+    },
+    "correlation_math_vs_portuguese": {
+      "r": 0.4803,
+      "p": 1.909e-23
+    },
+    "ttest_engagement_high_vs_low": {
+      "t": 24.9026,
+      "p": 2.332e-71
+    },
+    "kruskal_engagement_by_class": {
+      "H": 238.9634,
+      "p": 1.288e-52
+    }
+  }
+}
