@@ -67,7 +67,9 @@ pip install -r requirements.txt
 jupyter notebook analysis.ipynb
 ```
 
-The notebook creates all 16 figures in `figures/`. Every model uses `random_state=42`, so the results are reproducible. Last run with Python 3.11 and scikit-learn 1.8; two AUC values differ from the report by less than 0.003, most likely because of newer library versions.
+The notebook creates all 16 figures in `figures/`. Every model uses `random_state=42`, so the results are reproducible.
+
+**Tested with Python 3.12.** The library versions in `requirements.txt` are pinned because newer releases change the results slightly (scikit-learn 1.9, for example, moves Math accuracy from 86.1% to 87.3%). Two AUC values differ from the report by less than 0.003, most likely because the report was made with older library versions.
 
 ## What's in this repo
 
